@@ -10,6 +10,7 @@ import axios from "axios";
 import fileDownload from "js-file-download";
 
 function App() {
+    document.title = "Equisign challenge - Filesharing"
     return (
         <Router>
             <div>
@@ -37,7 +38,7 @@ function SlugDownloader() {
     })
 
     const infoRequest = (slug) => {
-        fetch('http://localhost:9000/files/sluginfo/' + slug)
+        fetch('http://vps779639.ovh.net:9000/files/sluginfo/' + slug)
             .then(res => res.json())
             .then(data => {
                 console.log(data)
@@ -46,7 +47,7 @@ function SlugDownloader() {
     }
 
     const downloadRequest = (file) => {
-        axios.get('http://localhost:9000/files/slug/' + file.slug, {
+        axios.get('http://vps779639.ovh.net:9000/files/slug/' + file.slug, {
             responseType: 'blob',
         })
             .then((res) => {
