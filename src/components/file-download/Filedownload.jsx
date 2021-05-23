@@ -1,14 +1,14 @@
 import React, {useState, useEffect} from "react";
 import fileDownload from 'js-file-download'
 import axios from 'axios'
+import Popup from 'reactjs-popup';
 
 export function Filedownload() {
     const [newUserFiles, setNewUserFiles] = useState([]);
 
-    // fetch data
     useEffect(() => {
         let owner = window.location.pathname.split("/").pop();
-        fetch('http://localhost:9000/files/owner/' + owner)
+        fetch('http://vps779639.ovh.net:9000/files/owner/' + owner)
             .then(res => res.json())
             .then(data => {
                 let userFiles = []
@@ -19,6 +19,7 @@ export function Filedownload() {
                 setNewUserFiles(userFiles)
             })
     }, [])
+
 
     const differenceWithToday = (timestamp) => {
         let today = new Date();
@@ -44,7 +45,7 @@ export function Filedownload() {
     }
 
     const handleDownloadClick = (event) => {
-        axios.get('http://localhost:9000/files/' + event.target.dataset.id, {
+        axios.get('http://vps779639.ovh.net:9000/files/' + event.target.dataset.id, {
             responseType: 'blob',
         })
             .then((res) => {
@@ -52,8 +53,8 @@ export function Filedownload() {
             });
     }
 
-    const handleSlugClick = (event) => {
-        alert(window.location.origin + "/slugdl/" + event.target.dataset.slug)
+    const handleSlugClick = (slug) => {
+        return window.location.origin + "/slugdl/" + slug
     }
 
     return <div className={"container"}>
@@ -77,9 +78,21 @@ export function Filedownload() {
                             <button data-id={file.id} data-filename={file.filename} onClick={handleDownloadClick}>
                                 <i className="fa fa-download"></i> Télécharger
                             </button>
-                            <button data-slug={file.slug} onClick={handleSlugClick}>
-                                <i className="fa fa-share"></i>Créer un lien de partage
-                            </button>
+
+                            <Popup trigger={
+                                <button>
+                                    <i className="fa fa-share"></i>Créer un lien de partage
+                                </button>
+                            } position="top">
+                                {close => (
+                                    <div className={"sharePopup"}>
+                                        {handleSlugClick(file.slug)}
+                                        <a className="close" style={{cursor: "pointer"}} onClick={close}>
+                                            &times;
+                                        </a>
+                                    </div>
+                                )}
+                            </Popup>
                         </td>
                         <td>{file.filename}</td>
                         <td>{convertSizeToHumanReadable(file.size)}</td>
@@ -89,8 +102,6 @@ export function Filedownload() {
                 </tbody>
             </table>
         }
-
-
     </div>
 }
 
