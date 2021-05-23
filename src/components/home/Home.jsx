@@ -39,6 +39,6 @@ export function Home() {
                 </div>
             </form>
         </div>
+        <footer style={{position: "fixed", bottom: "5px", right: "5px"}}> Copyright &copy; 2021 nilauberge.tech. All rights reserved</footer>
     </form>
-
 }
