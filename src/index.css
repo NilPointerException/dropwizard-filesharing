@@ -63,3 +63,10 @@ code {
 #download-table button:hover {
     background-color: lightgray;
 }
+
+.sharePopup {
+    background-color: #3498db;
+    padding: 5px;
+    border: 1px dotted white;
+    border-radius: 10px;
+}
