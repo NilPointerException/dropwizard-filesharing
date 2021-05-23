@@ -44,7 +44,7 @@ const FileUpload = ({
   };
 
   const fileUpload = (file) => {
-    const url = 'http://localhost:9000/files';
+    const url = 'http://vps779639.ovh.net:9000/files';
     const owner = window.location.pathname.split("/").pop();
     const formData = new FormData();
     formData.append('file', file)
@@ -64,7 +64,10 @@ const FileUpload = ({
       let updatedFiles = addNewFiles(newFiles)
       setFiles(updatedFiles)
       callUpdateFilesCb(updatedFiles)
-      fileUpload(newFiles[0]).then(window.location.reload())
+      fileUpload(newFiles[0]).then( (retour) => {
+        console.log(retour)
+        window.location.reload()
+      })
 
     }
   };
